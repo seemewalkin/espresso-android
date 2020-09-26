@@ -23,16 +23,8 @@ class WelcomePage : BasePage() {
             .check(matches(isDisplayed()))
     }
 
-
     fun tapOnClickMeBtn() = this.also {
         onView(withId(R.id.clickMeBtn))
             .perform(click())
     }
-
-    fun isToastTextVisible() = this. also {
-        onView(withText("Capture me while you can!"))
-            .check(matches(isDisplayed()))
-
-    }
-
 }

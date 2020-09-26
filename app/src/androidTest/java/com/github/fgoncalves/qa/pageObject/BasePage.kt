@@ -1,23 +1,19 @@
 package com.github.fgoncalves.qa.pageObject
 
-import android.view.View
-import androidx.test.espresso.ViewAction
-import androidx.test.espresso.ViewAssertion
-import com.github.fgoncalves.qa.pageObject.EspressoExtensions.waitForView
-import org.hamcrest.Matcher
+import androidx.test.rule.ActivityTestRule
+import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.RootMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.*
+import org.hamcrest.Matchers.not
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.Espresso.onView
 
 
 abstract class BasePage {
 
-    fun doOnView(matcher: Matcher<View>, vararg actions: ViewAction) {
-        actions.forEach {
-            waitForView(matcher).perform(it)
-        }
-    }
-
-    fun assertOnView(matcher: Matcher<View>, vararg assertions: ViewAssertion) {
-        assertions.forEach {
-            waitForView(matcher).check(it)
-        }
+    fun verifyTextIsVisible(text: String, activityTestRule: ActivityTestRule<*>) {
+         onView(withText(text))
+             .inRoot(withDecorView(not(activityTestRule.activity.window.decorView)))
+             .check(matches(isDisplayed()))
     }
 }

@@ -1,10 +1,9 @@
 package com.github.fgoncalves.qa.pageObject
 
 import android.view.View
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.*
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import org.hamcrest.Matcher
 
 object EspressoExtensions {
@@ -36,4 +35,15 @@ object EspressoExtensions {
         throw Exception("Error finding a view matching $viewMatcher")
     }
 
+    fun doOnView(matcher: Matcher<View>, vararg actions: ViewAction) {
+        actions.forEach {
+            waitForView(matcher).perform(it)
+        }
+    }
+
+    fun assertOnView(matcher: Matcher<View>, vararg assertions: ViewAssertion) {
+        assertions.forEach {
+            waitForView(matcher).check(it)
+        }
+    }
 }

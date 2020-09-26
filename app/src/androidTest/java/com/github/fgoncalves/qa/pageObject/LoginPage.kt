@@ -18,14 +18,13 @@ class LoginPage : BasePage() {
         fun onLoginFormPage() = LOGIN_FORM_PAGE
     }
 
-    fun fillEmail(email: String) = this.also {
+    fun signInWithEmailAndPass(email: String, password: String) = this.also {
         onView(withId(R.id.email))
             .perform(replaceText(email), closeSoftKeyboard())
-    }
-
-    fun fillPassword(password: String) = this.also {
         onView(withId(R.id.password))
             .perform(replaceText(password), closeSoftKeyboard())
+        onView(withId(R.id.email_sign_in_button))
+            .perform(click())
     }
 
     fun tapLoginButton() = this.also {
